@@ -17,12 +17,12 @@ public class SeriesController {
     private SeriesApiService seriesApiService;
 
     @GetMapping("/{id}")
-    public Series getSeriesById(@PathVariable("id") int id){
+    public Series getSeriesById(@PathVariable("id")  String id){
         return seriesApiService.getSeriesById(id);
     }
 
     @GetMapping("/{id}/episodes")
-    public List<EpisodesItem> getSeriesEpisodesById(@PathVariable("id") int id){
+    public List<EpisodesItem> getSeriesEpisodesById(@PathVariable("id") String id){
         return seriesApiService
                 .getSeriesById(id)
                 .getEmbedded()

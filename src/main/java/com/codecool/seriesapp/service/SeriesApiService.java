@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class SeriesApiService {
 
-    public Series getSeriesById(int id) {
+    public Series getSeriesById(String id) {
         RestTemplate template = new RestTemplate();
         ResponseEntity<Series> seriesResponseEntity = template.exchange("http://api.tvmaze.com/shows/" + id + "?embed[]=episodes&embed[]=cast", HttpMethod.GET, null, Series.class);
         return seriesResponseEntity.getBody();
