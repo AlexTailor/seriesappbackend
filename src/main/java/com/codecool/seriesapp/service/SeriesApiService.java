@@ -1,28 +1,19 @@
 package com.codecool.seriesapp.service;
 
+import com.codecool.seriesapp.model.generated.Series;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.codecool.seriesapp.model.RemoteURLReader;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-
-@Component
+@Service
 public class SeriesApiService {
-    RemoteURLReader remoteURLReader;
 
-    public SeriesApiService(RemoteURLReader remoteURLReader) {
-        this.remoteURLReader = remoteURLReader;
+    public Series getSeriesById(int id) {
+        RestTemplate template = new RestTemplate();
+        ResponseEntity<Series> seriesResponseEntity = template.exchange("http://api.tvmaze.com/shows/" + id + "?embed[]=episodes&embed[]=cast", HttpMethod.GET, null, Series.class);
+        return seriesResponseEntity.getBody();
     }
 
-    private final String apiPath = "http://api.tvmaze.com/shows";
-
-    public String getDataFromApi() throws JSONException, IOException {
-        String url = apiPath;
-        String result = remoteURLReader.readFromUrl(url);
-//        JSONObject json =  JSONObject(result);
-        return result;
-    }
 
 }

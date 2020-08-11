@@ -1,15 +1,12 @@
 package com.codecool.seriesapp.controller;
 
+import com.codecool.seriesapp.model.generated.EpisodesItem;
+import com.codecool.seriesapp.model.generated.Series;
 import com.codecool.seriesapp.service.SeriesApiService;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/shows")
@@ -17,10 +14,19 @@ import java.io.IOException;
 public class SeriesController {
 
     @Autowired
-    SeriesApiService seriesApiService;
+    private SeriesApiService seriesApiService;
 
-    @GetMapping
-    public String isSeries() throws IOException, JSONException {
-        return seriesApiService.getDataFromApi();
+    @GetMapping("/{id}")
+    public Series getSeriesById(@PathVariable("id") int id){
+        return seriesApiService.getSeriesById(id);
     }
+
+    @GetMapping("/{id}/episodes")
+    public List<EpisodesItem> getSeriesEpisodesById(@PathVariable("id") int id){
+        return seriesApiService
+                .getSeriesById(id)
+                .getEmbedded()
+                .getEpisodes();
+    }
+
 }
