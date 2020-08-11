@@ -21,6 +21,6 @@ public class SeriesController {
 
     @GetMapping
     public String isSeries() throws IOException, JSONException {
-        return seriesApiService.getDataFromApi().toString();
+        return seriesApiService.getDataFromApi();
     }
 }

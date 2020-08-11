@@ -1,5 +1,6 @@
 package com.codecool.seriesapp.service;
 
+
 import com.codecool.seriesapp.model.RemoteURLReader;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,11 +18,11 @@ public class SeriesApiService {
 
     private final String apiPath = "http://api.tvmaze.com/shows";
 
-    public JSONObject getDataFromApi() throws JSONException, IOException {
+    public String getDataFromApi() throws JSONException, IOException {
         String url = apiPath;
         String result = remoteURLReader.readFromUrl(url);
-        JSONObject json = new JSONObject(result);
-        return json;
+//        JSONObject json =  JSONObject(result);
+        return result;
     }
 
 }
