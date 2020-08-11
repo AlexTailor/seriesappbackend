@@ -1,6 +1,8 @@
 package com.codecool.seriesapp.controller;
 
+import com.codecool.seriesapp.model.generated.CastItem;
 import com.codecool.seriesapp.model.generated.EpisodesItem;
+import com.codecool.seriesapp.model.generated.Person;
 import com.codecool.seriesapp.model.generated.Series;
 import com.codecool.seriesapp.service.SeriesApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,11 @@ public class SeriesController {
                 .getSeriesById(id)
                 .getEmbedded()
                 .getEpisodes();
+    }
+
+    @GetMapping("/{id}/staff")
+    public List<CastItem> getStaffbyId(@PathVariable("id") String id){
+        return seriesApiService.getSeriesById(id).getEmbedded().getCast();
     }
 
 }
