@@ -18,6 +18,11 @@ public class SeriesController {
     @Autowired
     private SeriesApiService seriesApiService;
 
+    @GetMapping
+    public Series[] getSeries(){
+        return seriesApiService.getSeries();
+    }
+
     @GetMapping("/{id}")
     public Series getSeriesById(@PathVariable("id")  String id){
         return seriesApiService.getSeriesById(id);
