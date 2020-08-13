@@ -23,9 +23,6 @@ import java.util.Random;
 public class SeriesController {
 
     @Autowired
-    private PeopleSearchApi peopleSearchApi;
-
-    @Autowired
     private SeriesApiService seriesApiService;
 
     @GetMapping
@@ -63,25 +60,4 @@ public class SeriesController {
     public List<CastItem> getStaffbyId(@PathVariable("id") String id) {
         return seriesApiService.getSeriesById(id).getEmbedded().getCast();
     }
-
-    @GetMapping("/staff")
-    public List<People> getStaff() {
-        List<People> persons = new ArrayList<>();
-        int i = 1;
-        while (i < 49) {
-            String str = String.valueOf(i);
-            persons.add(seriesApiService.getPeopleById(str));
-            i++;
-        }
-        return persons;
-    }
-
-    @GetMapping("/staff/search/{name}")
-    public String getStaffByName(@PathVariable("name") String name) throws IOException, JSONException {
-        return peopleSearchApi.getPeople(name);
-    }
-
-
-
-
 }
