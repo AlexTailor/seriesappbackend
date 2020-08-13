@@ -47,4 +47,9 @@ public class StaffController {
         return peopleSearchApi.getPeople(name);
     }
 
+    @GetMapping("/castcredit/{id}")
+    public String getCastCredit(@PathVariable("id") String id) throws IOException {
+        return peopleSearchApi.getCastCredit(id);
+    }
+
 }

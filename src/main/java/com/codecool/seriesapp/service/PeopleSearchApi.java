@@ -18,4 +18,10 @@ public class PeopleSearchApi {
         String result = remoteURLReader.readFromUrl(url);
         return result;
     }
+
+    public String getCastCredit(String id) throws IOException {
+        String url = "http://api.tvmaze.com/people/"+id+"/castcredits?embed=show";
+        String result = remoteURLReader.readFromUrl(url);
+        return result;
+    }
 }
