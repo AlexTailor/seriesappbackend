@@ -1,5 +1,6 @@
 package com.codecool.seriesapp.controller;
 
+import com.codecool.seriesapp.model.generated.Series;
 import com.codecool.seriesapp.model.generated.people.People;
 import com.codecool.seriesapp.service.PeopleSearchApi;
 import com.codecool.seriesapp.service.SeriesApiService;
@@ -34,6 +35,12 @@ public class StaffController {
         }
         return persons;
     }
+
+    @GetMapping("/{id}")
+    public People getStaffById(@PathVariable("id") String id) {
+        return seriesApiService.getPeopleById(id);
+    }
+
 
     @GetMapping("/search/{name}")
     public String getStaffByName(@PathVariable("name") String name) throws IOException, JSONException {
