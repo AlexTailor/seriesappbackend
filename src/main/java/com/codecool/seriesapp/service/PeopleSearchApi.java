@@ -1,7 +1,6 @@
 package com.codecool.seriesapp.service;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +19,7 @@ public class PeopleSearchApi {
     }
 
     public String getCastCredit(String id) throws IOException {
-        String url = "http://api.tvmaze.com/people/"+id+"/castcredits?embed=show";
-        String result = remoteURLReader.readFromUrl(url);
-        return result;
-    }
-
-    public String getSeasonsBySeriesId(String id) throws IOException {
-        String url = "http://api.tvmaze.com/shows/"+id+"/seasons";
+        String url = "http://api.tvmaze.com/people/" + id + "/castcredits?embed=show";
         String result = remoteURLReader.readFromUrl(url);
         return result;
     }
