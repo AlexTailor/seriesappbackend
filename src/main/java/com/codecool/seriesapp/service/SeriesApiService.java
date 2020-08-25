@@ -1,8 +1,10 @@
 package com.codecool.seriesapp.service;
 
+import com.codecool.seriesapp.model.entity.FavouriteSeries;
 import com.codecool.seriesapp.model.generated.EpisodesItem;
 import com.codecool.seriesapp.model.generated.Series;
 import com.codecool.seriesapp.model.generated.people.People;
+import com.codecool.seriesapp.repository.FavouriteSeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class SeriesApiService {
 
     @Autowired
     RemoteURLReader remoteURLReader;
+
+    @Autowired
+    FavouriteSeriesRepository favouriteSeriesRepository;
 
     public Series[] getSeries() {
         RestTemplate template = new RestTemplate();
@@ -76,5 +81,14 @@ public class SeriesApiService {
         return searchedSeries;
     }
 
+    public List<Series> getFavouriteSeries(){
+        List<FavouriteSeries> favouriteSeries = favouriteSeriesRepository.findAll();
+        List<Series> result = new ArrayList<>();
+        for (FavouriteSeries series: favouriteSeries) {
+            result.add(getSeriesById(String.valueOf(series.getShowId())));
+        }
+        return result;
+
+    }
 
 }

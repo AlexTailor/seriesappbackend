@@ -21,6 +21,6 @@ public class FavouriteSeries {
     @GeneratedValue
     private long id;
 
-    @Column(nullable = false , unique = true)
+    @Column(name="showId", nullable = false , unique = true)
     private int showId;
 }
