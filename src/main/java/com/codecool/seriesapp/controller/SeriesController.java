@@ -1,8 +1,10 @@
 package com.codecool.seriesapp.controller;
 
+import com.codecool.seriesapp.model.entity.FavouriteSeries;
 import com.codecool.seriesapp.model.generated.CastItem;
 import com.codecool.seriesapp.model.generated.EpisodesItem;
 import com.codecool.seriesapp.model.generated.Series;
+import com.codecool.seriesapp.repository.FavouriteSeriesRepository;
 import com.codecool.seriesapp.service.SeriesApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,9 @@ public class SeriesController {
 
     @Autowired
     private SeriesApiService seriesApiService;
+
+    @Autowired
+    FavouriteSeriesRepository favouriteSeriesRepository;
 
     @GetMapping
     public Series[] getSeries() {
@@ -50,8 +55,8 @@ public class SeriesController {
     }
 
     @PostMapping("/firstPost")
-    public void getFirstPost(@RequestBody String id) {
-        System.out.println(id);
+    public void getFirstPost(@RequestBody FavouriteSeries id) {
+        favouriteSeriesRepository.save(id);
     }
 
     @GetMapping("/{id}/season")

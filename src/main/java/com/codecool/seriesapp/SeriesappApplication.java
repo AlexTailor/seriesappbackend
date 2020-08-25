@@ -22,7 +22,7 @@ public class SeriesappApplication {
     public CommandLineRunner init() {
         return args -> {
             FavouriteSeries teszt = FavouriteSeries.builder()
-                    .title("Teszt")
+                    .showId(5)
                     .build();
             favouriteSeriesRepository.save(teszt);
         };

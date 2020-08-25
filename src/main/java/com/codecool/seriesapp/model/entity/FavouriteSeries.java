@@ -22,9 +22,5 @@ public class FavouriteSeries {
     private long id;
 
     @Column(nullable = false , unique = true)
-    private String title;
-
-
-
-
+    private int showId;
 }
