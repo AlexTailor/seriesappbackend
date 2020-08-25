@@ -50,13 +50,12 @@ public class SeriesController {
     }
 
     @PostMapping("/firstPost")
-    public String getFirstPost(@RequestBody String id) {
+    public void getFirstPost(@RequestBody String id) {
         System.out.println(id);
-        return "";
     }
 
     @GetMapping("/{id}/season")
-    public String getSeaonsByShowId(@PathVariable("id") String id) throws IOException {
+    public String getSeasonsByShowId(@PathVariable("id") String id) throws IOException {
         return seriesApiService.getSeasonsBySeriesId(id);
     }
 
