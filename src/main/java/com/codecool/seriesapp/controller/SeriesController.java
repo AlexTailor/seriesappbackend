@@ -49,6 +49,12 @@ public class SeriesController {
         return seriesApiService.getSeriesById(id).getEmbedded().getCast();
     }
 
+    @PostMapping("/firstPost")
+    public String getFirstPost(@RequestBody String id) {
+        System.out.println(id);
+        return "";
+    }
+
     @GetMapping("/{id}/season")
     public String getSeaonsByShowId(@PathVariable("id") String id) throws IOException {
         return seriesApiService.getSeasonsBySeriesId(id);
