@@ -24,4 +24,10 @@ public class PeopleSearchApi {
         String result = remoteURLReader.readFromUrl(url);
         return result;
     }
+
+    public String getSeasonsBySeriesId(String id) throws IOException {
+        String url = "http://api.tvmaze.com/shows/"+id+"/seasons";
+        String result = remoteURLReader.readFromUrl(url);
+        return result;
+    }
 }

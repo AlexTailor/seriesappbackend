@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @RequestMapping("/shows")
@@ -24,6 +21,9 @@ public class SeriesController {
 
     @Autowired
     private SeriesApiService seriesApiService;
+
+    @Autowired
+    private PeopleSearchApi peopleSearchApi;
 
     @GetMapping
     public Series[] getSeries() {
@@ -50,14 +50,37 @@ public class SeriesController {
 
     @GetMapping("/{id}/episodes")
     public List<EpisodesItem> getSeriesEpisodesById(@PathVariable("id") String id) {
-        return seriesApiService
+        List<EpisodesItem> episodes = seriesApiService
                 .getSeriesById(id)
                 .getEmbedded()
                 .getEpisodes();
+        return episodes;
+    }
+
+    @GetMapping("/{id}/season/{num}/episode")
+    public List<EpisodesItem> getEpisodesByTheGivenSeasonNum(@PathVariable String id, @PathVariable String num) {
+        List<EpisodesItem> episodeOfTheGivenSeason = new ArrayList<>();
+        List<EpisodesItem> episodes = seriesApiService
+                .getSeriesById(id)
+                .getEmbedded()
+                .getEpisodes();
+        for (EpisodesItem episode: episodes) {
+            if (Integer.parseInt(num) == episode.getSeason()) {
+                episodeOfTheGivenSeason.add(episode);
+            }
+        }
+        return episodeOfTheGivenSeason;
     }
 
     @GetMapping("/{id}/staff")
     public List<CastItem> getStaffbyId(@PathVariable("id") String id) {
         return seriesApiService.getSeriesById(id).getEmbedded().getCast();
     }
+
+    @GetMapping("/{id}/season")
+    public String getSeaonsByShowId(@PathVariable("id") String id) throws IOException {
+        return peopleSearchApi.getSeasonsBySeriesId(id);
+    }
+
+
 }
