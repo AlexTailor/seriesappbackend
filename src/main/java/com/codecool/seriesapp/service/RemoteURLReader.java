@@ -1,5 +1,4 @@
-package com.codecool.seriesapp.model;
-
+package com.codecool.seriesapp.service;
 
 import org.springframework.stereotype.Component;
 

@@ -1,15 +1,14 @@
 package com.codecool.seriesapp.controller;
 
+import com.codecool.seriesapp.model.generated.CastItem;
+import com.codecool.seriesapp.model.generated.EpisodesItem;
+import com.codecool.seriesapp.model.generated.Series;
 import com.codecool.seriesapp.service.SeriesApiService;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/shows")
@@ -17,10 +16,43 @@ import java.io.IOException;
 public class SeriesController {
 
     @Autowired
-    SeriesApiService seriesApiService;
+    private SeriesApiService seriesApiService;
 
     @GetMapping
-    public String isSeries() throws IOException, JSONException {
-        return seriesApiService.getDataFromApi();
+    public Series[] getSeries() {
+        return seriesApiService.getSeries();
     }
+
+    @GetMapping("/searchresult/{value}")
+    public List<Series> getSeries(@PathVariable("value") String value) {
+        return seriesApiService.searchSeries(value);
+    }
+
+
+    @GetMapping("/{id}")
+    public Series getSeriesById(@PathVariable("id") String id) {
+        return seriesApiService.getSeriesById(id);
+    }
+
+    @GetMapping("/{id}/episodes")
+    public List<EpisodesItem> getSeriesEpisodesById(@PathVariable("id") String id) {
+        return seriesApiService.getSeriesEpisodesById(id);
+    }
+
+    @GetMapping("/{id}/season/{num}/episode")
+    public List<EpisodesItem> getEpisodesByTheGivenSeasonNum(@PathVariable String id, @PathVariable String num) {
+        return seriesApiService.getEpisodesBySeasonNum(id, num);
+    }
+
+    @GetMapping("/{id}/staff")
+    public List<CastItem> getStaffbyId(@PathVariable("id") String id) {
+        return seriesApiService.getSeriesById(id).getEmbedded().getCast();
+    }
+
+    @GetMapping("/{id}/season")
+    public String getSeaonsByShowId(@PathVariable("id") String id) throws IOException {
+        return seriesApiService.getSeasonsBySeriesId(id);
+    }
+
+
 }
