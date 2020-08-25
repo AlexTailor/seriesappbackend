@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface FavouriteSeriesRepository extends JpaRepository<FavouriteSeries, Long> {
 
-    int findFavouriteSeriesByShowId(int showId);
+   boolean existsByShowId(int showId);
+
 }

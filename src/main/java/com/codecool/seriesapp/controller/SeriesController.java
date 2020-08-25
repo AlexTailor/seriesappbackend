@@ -57,9 +57,7 @@ public class SeriesController {
 
     @PostMapping("/firstPost")
     public void getFirstPost(@RequestBody FavouriteSeries id) {
-        if (1 == 1) {
-            System.out.println("bitch");
-        } else {
+        if (!favouriteSeriesRepository.existsByShowId(id.getShowId())) {
             favouriteSeriesRepository.saveAndFlush(id);
         }
     }
