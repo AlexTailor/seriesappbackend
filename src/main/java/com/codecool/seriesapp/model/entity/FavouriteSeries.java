@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +18,10 @@ public class FavouriteSeries {
     @GeneratedValue
     private long id;
 
-    @Column(name="showId", nullable = false , unique = true)
+    @Column(nullable = false , unique = true)
     private int showId;
+
+    @ManyToOne
+    private User user;
+
 }
