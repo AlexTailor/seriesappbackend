@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 @Data
 @NoArgsConstructor
@@ -23,16 +22,5 @@ public class VotedSeries {
 
     private int showId;
 
-    @Transient
-    private double resultRating;
-
     private double seriesRating;
-
-    public void calculateResultRating(double number) {
-        resultRating = seriesRating + number;
-    }
-
-    public double getDifference() {
-        return resultRating - seriesRating;
-    }
 }

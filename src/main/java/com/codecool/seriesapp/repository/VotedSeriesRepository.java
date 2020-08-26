@@ -9,6 +9,8 @@ public interface VotedSeriesRepository extends JpaRepository<VotedSeries, Long> 
 
     boolean existsByShowId(int showId);
 
-    @Query("UPDATE VotedSeries v SET v.seriesRating = v.seriesRating + :num WHERE v.showId = :showId")
+    //TODO fix this query
+    @Query("UPDATE VotedSeries v SET v.seriesRating = :num WHERE v.showId = :showId")
     void setSeriesRating(@Param("showId") int showId, @Param("num") double num);
+
 }

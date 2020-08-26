@@ -83,17 +83,20 @@ public class SeriesController {
                     .seriesRating(series.getRating().getAverage())
                     .showId(series.getId())
                     .build();
+            votedSeriesRepository.save(votedSeries);
+            if (!vote.equals("up")) {
+                votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), -0.1);
+            } else {
+                votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), 0.1);
+            }
+            return votedSeries.getSeriesRating();
+        } else {
             if (vote.equals("up")) {
-                votedSeries.calculateResultRating(0.1);
+                votedSeriesRepository.setSeriesRating(id.getShowId(), 0.1);
+            } else {
+                votedSeriesRepository.setSeriesRating(id.getShowId(), -0.1);
             }
-            else {
-                votedSeries.calculateResultRating(-0.1);
-            }
-            return votedSeries.getDifference();
-        }
-        else {
-            votedSeriesRepository.setSeriesRating(id.getShowId(), 0.1);
-            return 6.7;
+            return 0.1;
         }
 
     }
