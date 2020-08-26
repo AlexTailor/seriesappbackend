@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class SeriesappApplication {
@@ -24,6 +25,7 @@ public class SeriesappApplication {
     }
 
     @Bean
+    @Profile("production")
     public CommandLineRunner init() {
         return args -> {
             FavouriteSeries teszt = FavouriteSeries.builder()
@@ -37,8 +39,6 @@ public class SeriesappApplication {
 
             teszt.setMember(alex);
             memberRepository.save(alex);
-
-
         };
     }
 

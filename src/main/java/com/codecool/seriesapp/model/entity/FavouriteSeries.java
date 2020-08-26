@@ -18,7 +18,7 @@ public class FavouriteSeries {
     @GeneratedValue
     private long id;
 
-    @Column(nullable = false , unique = true)
+    @Column(nullable = false, unique = true)
     private int showId;
 
     @ManyToOne

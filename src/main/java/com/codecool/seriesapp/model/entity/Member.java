@@ -17,7 +17,7 @@ public class Member {
     @GeneratedValue
     private long id;
 
-    @Column(nullable = false , unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
     private LocalDate birthDate;
@@ -25,7 +25,7 @@ public class Member {
     private String email;
 
     @Singular("series")
-    @OneToMany(mappedBy = "member" , cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     private Set<FavouriteSeries> favouriteSeries;
 

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,10 +18,9 @@ import java.util.List;
 public class SeriesController {
 
     @Autowired
-    private SeriesApiService seriesApiService;
-
-    @Autowired
     FavouriteSeriesRepository favouriteSeriesRepository;
+    @Autowired
+    private SeriesApiService seriesApiService;
 
     @GetMapping
     public Series[] getSeries() {
@@ -63,8 +61,8 @@ public class SeriesController {
     }
 
     @GetMapping("/favourites")
-    public List<Series> getFavouriteSeries(){
-       return seriesApiService.getFavouriteSeries();
+    public List<Series> getFavouriteSeries() {
+        return seriesApiService.getFavouriteSeries();
     }
 
     @GetMapping("/{id}/season")

@@ -81,10 +81,10 @@ public class SeriesApiService {
         return searchedSeries;
     }
 
-    public List<Series> getFavouriteSeries(){
+    public List<Series> getFavouriteSeries() {
         List<FavouriteSeries> favouriteSeries = favouriteSeriesRepository.findAll();
         List<Series> result = new ArrayList<>();
-        for (FavouriteSeries series: favouriteSeries) {
+        for (FavouriteSeries series : favouriteSeries) {
             result.add(getSeriesById(String.valueOf(series.getShowId())));
         }
         return result;

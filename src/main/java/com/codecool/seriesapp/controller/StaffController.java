@@ -32,15 +32,12 @@ public class StaffController {
         if (page.equals("first")) {
             start = 1;
             end = 24;
-        }
-        else if (page.equals("next")) {
+        } else if (page.equals("next")) {
             end = start + 23;
-        }
-        else if (page.equals("prev") && start > 25) {
+        } else if (page.equals("prev") && start > 25) {
             start = start - 48;
             end = start + 23;
-        }
-        else if (page.equals("prev") && start == 25) {
+        } else if (page.equals("prev") && start == 25) {
             start = 1;
             end = 24;
         }
