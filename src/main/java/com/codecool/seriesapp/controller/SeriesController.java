@@ -9,7 +9,6 @@ import com.codecool.seriesapp.repository.FavouriteSeriesRepository;
 import com.codecool.seriesapp.repository.VotedSeriesRepository;
 import com.codecool.seriesapp.service.SeriesApiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -77,31 +76,10 @@ public class SeriesController {
     }
 
     @PostMapping("/vote/{vote}")
-    public double getVotes(@PathVariable("vote") String vote, @RequestBody VotedSeries id) {
-        if (!favouriteSeriesRepository.existsByShowId(id.getShowId())) {
-            Series series = seriesApiService.getSeriesById(String.valueOf(id.getShowId()));
-            VotedSeries votedSeries = VotedSeries.builder()
-                    .seriesRating(series.getRating().getAverage())
-                    .showId(series.getId())
-                    .build();
-            votedSeriesRepository.save(votedSeries);
-            if (vote.equals("up")) {
-                votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), 0.1);
-            } else {
-                votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), -0.1);
-            }
-            double rate = votedSeriesRepository.getSeriesRatingByShowId(series.getId());
-            System.out.println(rate);            return rate;
-        } else {
-            if (vote.equals("up")) {
-                votedSeriesRepository.setSeriesRating(id.getShowId(), 0.1);
-            } else {
-                votedSeriesRepository.setSeriesRating(id.getShowId(), -0.1);
-            }
-            double rate = votedSeriesRepository.getSeriesRatingByShowId(id.getShowId());
-            System.out.println(rate);
-            return rate;
-        }
-
+    public double updateVotes(@PathVariable("vote") String vote, @RequestBody VotedSeries votedSeries) {
+        if (!votedSeriesRepository.existsByShowId(votedSeries.getShowId())) votedSeriesRepository.save(votedSeries);
+        if (vote.equals("up")) votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), 0.1);
+        if (vote.equals("down")) votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), -0.1);
+        return votedSeriesRepository.getSeriesRatingByShowId(votedSeries.getShowId());
     }
 }
