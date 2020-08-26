@@ -16,6 +16,9 @@ import java.util.List;
 @CrossOrigin("*")
 public class StaffController {
 
+    int start;
+    int end;
+
     @Autowired
     SeriesApiService seriesApiService;
 
@@ -23,14 +26,28 @@ public class StaffController {
     PeopleSearchApi peopleSearchApi;
 
 
-    @GetMapping()
-    public List<People> getStaff() {
+    @GetMapping("/page/{page}")
+    public List<People> getStaff(@PathVariable("page") String page) {
         List<People> persons = new ArrayList<>();
-        int i = 1;
-        while (i < 49) {
-            String str = String.valueOf(i);
+        if (page.equals("first")) {
+            start = 1;
+            end = 24;
+        }
+        else if (page.equals("next")) {
+            end = start + 23;
+        }
+        else if (page.equals("prev") && start > 25) {
+            start = start - 48;
+            end = start + 23;
+        }
+        else if (page.equals("prev") && start == 25) {
+            start = 1;
+            end = 24;
+        }
+        while (start <= end) {
+            String str = String.valueOf(start);
             persons.add(seriesApiService.getPeopleById(str));
-            i++;
+            start++;
         }
         return persons;
     }
