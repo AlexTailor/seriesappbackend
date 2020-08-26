@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue
@@ -25,7 +25,7 @@ public class User {
     private String email;
 
     @Singular("series")
-    @OneToMany(mappedBy = "user" , cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "member" , cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     private Set<FavouriteSeries> favouriteSeries;
 

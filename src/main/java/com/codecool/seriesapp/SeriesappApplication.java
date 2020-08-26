@@ -1,9 +1,9 @@
 package com.codecool.seriesapp;
 
 import com.codecool.seriesapp.model.entity.FavouriteSeries;
-import com.codecool.seriesapp.model.entity.User;
+import com.codecool.seriesapp.model.entity.Member;
 import com.codecool.seriesapp.repository.FavouriteSeriesRepository;
-import com.codecool.seriesapp.repository.UserRepository;
+import com.codecool.seriesapp.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +17,7 @@ public class SeriesappApplication {
     FavouriteSeriesRepository favouriteSeriesRepository;
 
     @Autowired
-    UserRepository userRepository;
+    MemberRepository memberRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(SeriesappApplication.class, args);
@@ -30,13 +30,13 @@ public class SeriesappApplication {
                     .showId(5)
                     .build();
 
-            User alex = User.builder()
+            Member alex = Member.builder()
                     .username("Alex")
                     .series(teszt)
                     .build();
 
-            teszt.setUser(alex);
-            userRepository.save(alex);
+            teszt.setMember(alex);
+            memberRepository.save(alex);
 
 
         };

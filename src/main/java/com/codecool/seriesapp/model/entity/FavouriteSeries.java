@@ -22,6 +22,6 @@ public class FavouriteSeries {
     private int showId;
 
     @ManyToOne
-    private User user;
+    private Member member;
 
 }
