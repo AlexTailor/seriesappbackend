@@ -1,10 +1,12 @@
 package com.codecool.seriesapp.controller;
 
 import com.codecool.seriesapp.model.entity.FavouriteSeries;
+import com.codecool.seriesapp.model.entity.VotedSeries;
 import com.codecool.seriesapp.model.generated.CastItem;
 import com.codecool.seriesapp.model.generated.EpisodesItem;
 import com.codecool.seriesapp.model.generated.Series;
 import com.codecool.seriesapp.repository.FavouriteSeriesRepository;
+import com.codecool.seriesapp.repository.VotedSeriesRepository;
 import com.codecool.seriesapp.service.SeriesApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,12 @@ import java.util.List;
 public class SeriesController {
 
     @Autowired
-    FavouriteSeriesRepository favouriteSeriesRepository;
+    private FavouriteSeriesRepository favouriteSeriesRepository;
     @Autowired
     private SeriesApiService seriesApiService;
+
+    @Autowired
+    private VotedSeriesRepository votedSeriesRepository;
 
     @GetMapping
     public Series[] getSeries() {
@@ -70,5 +75,26 @@ public class SeriesController {
         return seriesApiService.getSeasonsBySeriesId(id);
     }
 
+    @PostMapping("/vote/{vote}")
+    public double getVotes(@PathVariable("vote") String vote, @RequestBody VotedSeries id) {
+        if (!favouriteSeriesRepository.existsByShowId(id.getShowId())) {
+            Series series = seriesApiService.getSeriesById(String.valueOf(id.getShowId()));
+            VotedSeries votedSeries = VotedSeries.builder()
+                    .seriesRating(series.getRating().getAverage())
+                    .showId(series.getId())
+                    .build();
+            if (vote.equals("up")) {
+                votedSeries.calculateResultRating(0.1);
+            }
+            else {
+                votedSeries.calculateResultRating(-0.1);
+            }
+            return votedSeries.getDifference();
+        }
+        else {
+            votedSeriesRepository.setSeriesRating(id.getShowId(), 0.1);
+            return 6.7;
+        }
 
+    }
 }
