@@ -51,7 +51,8 @@ public class AllRepositoryTest {
                 .seriesRating(7.0)
                 .build();
         votedSeriesRepository.save(votedSeries);
-        votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), 7.1);
+        votedSeriesRepository.setSeriesRating(1, 7.1);
+        System.out.println(votedSeries.getSeriesRating());
         assertThat(votedSeries.getSeriesRating()).isEqualTo(7.1);
 
     }

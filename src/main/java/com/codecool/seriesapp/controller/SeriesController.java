@@ -9,6 +9,7 @@ import com.codecool.seriesapp.repository.FavouriteSeriesRepository;
 import com.codecool.seriesapp.repository.VotedSeriesRepository;
 import com.codecool.seriesapp.service.SeriesApiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -84,19 +85,22 @@ public class SeriesController {
                     .showId(series.getId())
                     .build();
             votedSeriesRepository.save(votedSeries);
-            if (!vote.equals("up")) {
-                votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), -0.1);
-            } else {
+            if (vote.equals("up")) {
                 votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), 0.1);
+            } else {
+                votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), -0.1);
             }
-            return votedSeries.getSeriesRating();
+            double rate = votedSeriesRepository.getSeriesRatingByShowId(series.getId());
+            System.out.println(rate);            return rate;
         } else {
             if (vote.equals("up")) {
                 votedSeriesRepository.setSeriesRating(id.getShowId(), 0.1);
             } else {
                 votedSeriesRepository.setSeriesRating(id.getShowId(), -0.1);
             }
-            return 0.1;
+            double rate = votedSeriesRepository.getSeriesRatingByShowId(id.getShowId());
+            System.out.println(rate);
+            return rate;
         }
 
     }
