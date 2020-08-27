@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+import static com.codecool.seriesapp.service.VotedSeriesService.round;
+
 @RestController
 @RequestMapping("/shows")
 @CrossOrigin("*")
@@ -80,6 +82,8 @@ public class SeriesController {
         if (!votedSeriesRepository.existsByShowId(votedSeries.getShowId())) votedSeriesRepository.save(votedSeries);
         if (vote.equals("up")) votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), 0.1);
         if (vote.equals("down")) votedSeriesRepository.setSeriesRating(votedSeries.getShowId(), -0.1);
-        return votedSeriesRepository.getSeriesRatingByShowId(votedSeries.getShowId());
+        return round(votedSeriesRepository.getSeriesRatingByShowId(votedSeries.getShowId()),1);
     }
+
+
 }
