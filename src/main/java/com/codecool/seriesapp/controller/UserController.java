@@ -55,7 +55,6 @@ public class UserController {
 
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody Member data) {
-
         try {
             String username = data.getUsername();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
@@ -71,7 +70,7 @@ public class UserController {
             model.put("username", username);
             model.put("roles", roles);
             model.put("token", token);
-            System.out.println(ResponseEntity.ok(model));
+
             return ResponseEntity.ok(model);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");

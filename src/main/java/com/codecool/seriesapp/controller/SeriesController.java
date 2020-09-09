@@ -6,12 +6,15 @@ import com.codecool.seriesapp.model.generated.CastItem;
 import com.codecool.seriesapp.model.generated.EpisodesItem;
 import com.codecool.seriesapp.model.generated.Series;
 import com.codecool.seriesapp.repository.FavouriteSeriesRepository;
+import com.codecool.seriesapp.repository.MemberRepository;
 import com.codecool.seriesapp.repository.VotedSeriesRepository;
+import com.codecool.seriesapp.security.JwtTokenFilter;
 import com.codecool.seriesapp.service.SeriesApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.codecool.seriesapp.service.VotedSeriesService.round;
@@ -20,6 +23,12 @@ import static com.codecool.seriesapp.service.VotedSeriesService.round;
 @RequestMapping("/shows")
 @CrossOrigin("*")
 public class SeriesController {
+
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    private JwtTokenFilter jwtTokenFilter;
 
     @Autowired
     private FavouriteSeriesRepository favouriteSeriesRepository;
@@ -62,14 +71,23 @@ public class SeriesController {
 
     @PostMapping("/firstPost")
     public void getFirstPost(@RequestBody FavouriteSeries id) {
-        if (!favouriteSeriesRepository.existsByShowId(id.getShowId())) {
-            favouriteSeriesRepository.saveAndFlush(id);
+        if (jwtTokenFilter.getAuth() != null) {
+            Long memberId  = memberRepository.getMemberIdByUserName(jwtTokenFilter.getAuth().getPrincipal().toString());
+            System.out.println(memberId);
+            if (!favouriteSeriesRepository.existsByShowId(id.getShowId())) {
+                id.setMember(memberRepository.getOne(memberId));
+                favouriteSeriesRepository.saveAndFlush(id);
+            }
         }
     }
 
     @GetMapping("/favourites")
     public List<Series> getFavouriteSeries() {
-        return seriesApiService.getFavouriteSeries();
+        if (jwtTokenFilter.getAuth() != null) {
+            Long id  = memberRepository.getMemberIdByUserName(jwtTokenFilter.getAuth().getPrincipal().toString());
+            return seriesApiService.getFavouriteSeries(id);
+        }
+       return Arrays.asList(seriesApiService.getSeries());
     }
 
     @GetMapping("/{id}/season")

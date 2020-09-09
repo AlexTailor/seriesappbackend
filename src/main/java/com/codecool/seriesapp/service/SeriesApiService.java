@@ -81,8 +81,8 @@ public class SeriesApiService {
         return searchedSeries;
     }
 
-    public List<Series> getFavouriteSeries() {
-        List<FavouriteSeries> favouriteSeries = favouriteSeriesRepository.findAll();
+    public List<Series> getFavouriteSeries(Long id) {
+        List<FavouriteSeries> favouriteSeries = favouriteSeriesRepository.getFavouriteSeriesByMember_Id(id);
         List<Series> result = new ArrayList<>();
         for (FavouriteSeries series : favouriteSeries) {
             result.add(getSeriesById(String.valueOf(series.getShowId())));
