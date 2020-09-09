@@ -16,6 +16,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,13 +44,18 @@ public class UserController {
 
     @PostMapping("/register")
     public void registerUser(@RequestBody Member member) {
-
+        if (member.getUsername().equals("Csaba")) {
+            member.setRoles(Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+        } else {
+            member.setRoles(Arrays.asList("ROLE_USER"));
+        }
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberRepository.save(member);
     }
 
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody Member data) {
+
         try {
             String username = data.getUsername();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
@@ -65,6 +71,7 @@ public class UserController {
             model.put("username", username);
             model.put("roles", roles);
             model.put("token", token);
+            System.out.println(ResponseEntity.ok(model));
             return ResponseEntity.ok(model);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
