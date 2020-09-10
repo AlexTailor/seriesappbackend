@@ -73,7 +73,7 @@ public class SeriesController {
     public void getFirstPost(@RequestBody FavouriteSeries id) {
         if (jwtTokenFilter.getAuth() != null) {
             Long memberId  = memberRepository.getMemberIdByUserName(jwtTokenFilter.getAuth().getPrincipal().toString());
-            System.out.println(memberId);
+
             if (!favouriteSeriesRepository.existsByShowId(id.getShowId())) {
                 id.setMember(memberRepository.getOne(memberId));
                 favouriteSeriesRepository.saveAndFlush(id);

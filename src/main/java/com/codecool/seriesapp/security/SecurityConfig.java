@@ -30,15 +30,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .csrf().disable()
-//                .cors()
-//                .and()
+                .cors()
+                .and()
                 .requestCache().requestCache(new NullRequestCache()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST).permitAll()
-                .antMatchers(HttpMethod.GET).permitAll()
-
+                .antMatchers("/staff/page/**").permitAll()
+                .antMatchers("/shows").permitAll()
+                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers("/signin").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/shows/**").authenticated()
+                .antMatchers(HttpMethod.POST,"/shows/**").authenticated()
+                .antMatchers("/staff/**").authenticated()
+                .anyRequest().denyAll()
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class);
     }
