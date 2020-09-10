@@ -44,7 +44,7 @@ public class UserController {
 
     @PostMapping("/register")
     public void registerUser(@RequestBody Member member) {
-        if (member.getUsername().equals("Csaba")) {
+        if (member.getUsername().equals("Csaba") || member.getUsername().equals("Alex") || member.getUsername().equals("Kincso")) {
             member.setRoles(Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
         } else {
             member.setRoles(Arrays.asList("ROLE_USER"));
