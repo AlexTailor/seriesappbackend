@@ -32,6 +32,7 @@ public class SeriesController {
 
     @Autowired
     private FavouriteSeriesRepository favouriteSeriesRepository;
+
     @Autowired
     private SeriesApiService seriesApiService;
 
